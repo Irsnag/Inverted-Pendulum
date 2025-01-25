@@ -26,20 +26,19 @@ def func(t, y):
 # Only the pendulum moves the cart is stationary
 if __name__=="__main__":
     # Solve ODE: theta_dot_dot = -g / L * cos( theta ) + delta * theta_dot
-    #       Use state y as `[ theta ; theta_dot ]`. Then the above equation can
-    #       be written as a function of y and t. `y_dot = f( t, y )`.
-    #
-    #  Given an inital state `y0` and limits of integration, we know the trajectory
-    #       followed by the pendulum. The solution of this ODE is plotted with
-    #       as a simulation.
-    sol = solve_ivp(func, [0, 20], [ np.pi/2 + 0.1, 0 ],   t_eval=np.linspace( 0, 20, 300)  )
+    
+    t_0 = 0
+    t_f = 20
+    y_0 = [np.pi/2 + 0.1, 0]
+    
+    sol = solve_ivp(func, [t_0, t_f], y_0, t_eval=np.linspace(t_0, t_f, 300)  )
 
 
     syst = InvertedPendulum()
 
     for i, t in enumerate(sol.t):
-        rendered = syst.step( [0,1, sol.y[0,i], sol.y[1,i] ], t )
-        cv2.imshow( 'im', rendered )
+        rendered = syst.step([0,1, sol.y[0,i], sol.y[1,i] ], t)
+        cv2.imshow('im', rendered)
 
         if cv2.waitKey(30) == ord('q'):
             break
