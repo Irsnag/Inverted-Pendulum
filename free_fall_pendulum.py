@@ -8,19 +8,19 @@ Created on Fri Jan 24 22:04:28 2025
 import numpy as np
 import cv2
 
-from InvertedPendulum import InvertedPendulum
+from invertedPendulum import InvertedPendulum
 
 from scipy.integrate import solve_ivp
 
 # Pendulum. Cart is fixed and cannot move.
 # Y : [ theta, theta_dot ]
 # returns expression for Y_dot.
-def func( t, y ):
+def func(t, y):
     g = 9.8 # Gravitational Acceleration
     L = 1.5 # Length of pendulum
 
-    damping =  - 0.5*y[1]
-    return [ y[1], -g/L * np.cos( y[0] )  + damping ]
+    friction =  -0.5*y[1]
+    return [ y[1], -g/L * np.cos( y[0] )  + friction ]
 
 
 # Only the pendulum moves the cart is stationary
