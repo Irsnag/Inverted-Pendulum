@@ -37,7 +37,7 @@ if __name__=="__main__":
     syst = InvertedPendulum()
 
     for i, t in enumerate(sol.t):
-        rendered = syst.step([0,1, sol.y[0,i], sol.y[1,i] ], t)
+        rendered = syst.step([0,1, sol.y[0,i], sol.y[1,i]], t)
         cv2.imshow('im', rendered)
 
         if cv2.waitKey(30) == ord('q'):
