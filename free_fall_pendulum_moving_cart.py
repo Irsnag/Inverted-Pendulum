@@ -33,7 +33,6 @@ def func2( t, y ):
     theta_ddot = theta_ddot + friction_theta
 
     return [y[1], x_ddot, y[3], theta_ddot]
-    pass
 
 
 # Both cart and the pendulum can move.
