@@ -49,3 +49,66 @@ class InvertedPendulumEnv(gym.Env):
         # For rendering
         self.screen = None
         self.clock = None
+
+    def reset(self, seed=None, options=None):
+        # Reset the environment
+        super().reset(seed=seed)
+        self.state = np.random.uniform(low=-0.05, high=0.05, size=(4,))
+        return np.array(self.state, dtype=np.float32), {}
+
+    def step(self, action):
+        x, x_dot, theta, theta_dot = self.state
+        force = self.force_mag if action == 1 else -self.force_mag
+
+        # Equations of motion
+        costheta = np.cos(theta)
+        sintheta = np.sin(theta)
+
+        temp = (force + self.pole_mass_length * theta_dot**2 * sintheta) / self.total_mass
+        theta_acc = (self.gravity * sintheta - costheta * temp) / (
+            self.length * (4.0 / 3.0 - self.mass_pole * costheta**2 / self.total_mass)
+        )
+        x_acc = temp - self.pole_mass_length * theta_acc * costheta / self.total_mass
+
+        # Update state using Euler's method
+        x = x + self.tau * x_dot
+        x_dot = x_dot + self.tau * x_acc
+        theta = theta + self.tau * theta_dot
+        theta_dot = theta_dot + self.tau * theta_acc
+
+        self.state = (x, x_dot, theta, theta_dot)
+
+        # Check termination conditions
+        terminated = (
+            x < -self.x_threshold
+            or x > self.x_threshold
+            or theta < -self.theta_threshold_radians
+            or theta > self.theta_threshold_radians
+        )
+        truncated = False  # For fixed time-limit environments, set this to `True` when reaching the limit
+
+        # Reward is +1 for every time step the pole is balanced
+        reward = 1.0 if not terminated else 0.0
+
+        return (
+            np.array(self.state, dtype=np.float32),
+            reward,
+            terminated,
+            truncated,
+            {},
+        )
+
+    def render(self):
+        if self.render_mode == "human":
+            print(
+                f"Cart Position: {self.state[0]:.2f}, Pole Angle: {self.state[2]:.2f} rad"
+            )
+
+    def close(self):
+        if self.screen is not None:
+            import pygame
+
+            pygame.display.quit()
+            pygame.quit()
+            self.screen = None
+            self.clock = None
