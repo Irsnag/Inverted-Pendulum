@@ -23,7 +23,6 @@ def func(t, y):
 # Only the pendulum moves, the cart is stationary
 if __name__=="__main__":
     # Solve ODE: theta_dot_dot = -g / L * cos( theta ) + delta * theta_dot
-    
     t_0 = 0
     t_f = 20
     y_0 = [np.pi/2 + 0.1, 0]
