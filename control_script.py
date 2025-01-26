@@ -8,7 +8,7 @@ Created on Sun Jan 26 18:10:11 2025
 import numpy as np
 import cv2
 
-from InvertedPendulum import InvertedPendulum
+from invertedPendulum import InvertedPendulum
 
 from scipy.integrate import solve_ivp
 import control
@@ -36,7 +36,7 @@ class MyLinearizedSystem:
         self.B = np.expand_dims( np.array( [0, 1.0/M, 0., -1/(M*L)] ) , 1 ) # 4x1
 
     def compute_K(self, desired_eigs = [-0.1, -0.2, -0.3, -0.4] ):
-        print '[compute_K] desired_eigs=', desired_eigs
+        #print('[compute_K] desired_eigs=', desired_eigs)
         self.K = control.place( self.A, self.B,  desired_eigs )
 
     def get_K(self):
@@ -65,7 +65,7 @@ ss.compute_K(desired_eigs = E ) # Arbitarily set desired eigen values
 # The control law is u = KY. K is the unknown which is computed as a solution to minimization problem.
 def u( t , y ):
     u_ = -np.matmul( ss.K , y - np.array([0,0,np.pi/2.,0]) ) # This was important
-    print 'u()', 't=',t, 'u_=', u_
+    #print('u()', 't=',t, 'u_=', u_)
     # code.interact(local=dict(globals(), **locals()))
     # return 0.1
     return u_[0]
@@ -86,6 +86,7 @@ def y_dot( t, y ):
 
 
     x_ddot = u(t, y) - m*L*y[3]*y[3] * np.cos( y[2] ) + m*g*np.cos(y[2]) *  np.sin(y[2])
+    print(u(t, y))
     x_ddot = x_ddot / ( M+m-m* np.sin(y[2])* np.sin(y[2]) )
 
     theta_ddot = -g/L * np.cos( y[2] ) -  np.sin( y[2] ) / L * x_ddot
@@ -96,18 +97,19 @@ def y_dot( t, y ):
 
     return [ y[1], x_ddot + damping_x, y[3], theta_ddot + damping_theta ]
 
+
+
 if __name__=="__1main__":
 
     # Verifying the correctness of linearization by evaluating y_dot
     # in two ways a) non-linear b) linear approximation
 
     at_y = np.array( [0,0,np.pi/2+0.1,0.002] )
-    print 'non-linear', y_dot( 1.0, at_y )
-    print 'linearized ', np.matmul( ss.A, at_y - np.array([0,0,np.pi/2.,0]) )  + ss.B.T * 0.1
+    #print 'non-linear', y_dot( 1.0, at_y )
+    #print 'linearized ', np.matmul( ss.A, at_y - np.array([0,0,np.pi/2.,0]) )  + ss.B.T * 0.1
     code.interact(local=dict(globals(), **locals()))
 
     # See also analysis_of_linearization to know more.
-
 
 
 # Both cart and the pendulum can move.
@@ -117,7 +119,7 @@ if __name__=="__main__":
     # it is possible to derive with hand. The entire notes are in media folder or the
     # blog post for this entry. Otherwse in essense it is very similar to free_fall_pendulum.py
     # For more comments see free_fall_pendulum.py
-    sol = solve_ivp(y_dot, [0, 20], [ 0.0, 0., np.pi/2 + 0.01, 0. ],   t_eval=np.linspace( 0, 20, 100)  )
+    sol = solve_ivp(y_dot, [0, 20], [ 0.0, 0., np.pi/2 - 0.3, 0. ],   t_eval=np.linspace( 0, 20, 300)  )
 
 
     syst = InvertedPendulum()
