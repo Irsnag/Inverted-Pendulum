@@ -17,7 +17,7 @@ class InvertedPendulumEnv(gym.Env):
         super(InvertedPendulumEnv, self).__init__()
         
         # Physical constants
-        self.gravity = 9.8
+        self.gravity = 9.81
         self.mass_cart = 1.0
         self.mass_pole = 0.1
         self.total_mass = self.mass_cart + self.mass_pole
@@ -76,7 +76,7 @@ class InvertedPendulumEnv(gym.Env):
         theta = theta + self.tau * theta_dot
         theta_dot = theta_dot + self.tau * theta_acc
 
-        self.state = (x, x_dot, theta, theta_dot)
+        self.state = [x, x_dot, theta, theta_dot]
 
         # Check termination conditions
         terminated = (
@@ -91,7 +91,7 @@ class InvertedPendulumEnv(gym.Env):
         reward = 1.0 if not terminated else 0.0
 
         return (
-            np.array(self.state, dtype=np.float32),
+            self.state,
             reward,
             terminated,
             truncated,
