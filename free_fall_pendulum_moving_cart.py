@@ -8,7 +8,7 @@ Created on Sun Jan 26 00:15:56 2025
 import numpy as np
 import cv2
 
-from invertedPendulum import InvertedPendulum
+from my_envs.invertedPendulum import InvertedPendulum
 
 from scipy.integrate import solve_ivp
 
