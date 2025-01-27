@@ -44,7 +44,7 @@ class InvertedPendulumEnv(gym.Env):
 
         # Rendering
         self.render_mode = render_mode
-        self.state = None
+        self.state = [0, 0., np.pi/2 + 0.1, 0]
 
         # For rendering
         self.screen = None
@@ -53,12 +53,12 @@ class InvertedPendulumEnv(gym.Env):
     def reset(self, seed=None, options=None):
         # Reset the environment
         super().reset(seed=seed)
-        self.state = np.random.uniform(low=-0.05, high=0.05, size=(4,))
+        self.state = [0, 0., np.pi/2 + 0.1, 0]
         return np.array(self.state, dtype=np.float32), {}
 
     def step(self, action):
         x, x_dot, theta, theta_dot = self.state
-        force = self.force_mag if action == 1 else -self.force_mag
+        force = action*self.force_mag if action != 1 else 0
 
         # Equations of motion
         costheta = np.cos(theta)

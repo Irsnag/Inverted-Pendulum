@@ -37,7 +37,7 @@ def func2( t, y ):
 
 # Both cart and the pendulum can move.
 if __name__=="__main__":
-    sol = solve_ivp(func2, [0, 20], [ -1.0, 0., np.pi/2 + 0.1, 0. ],   t_eval=np.linspace( 0, 20, 300)  )
+    sol = solve_ivp(func2, [0, 20], [ 0, 0., np.pi/2 + 0.1, 0. ],   t_eval=np.linspace( 0, 20, 300)  )
 
     syst = InvertedPendulum()
 
