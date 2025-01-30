@@ -23,7 +23,7 @@ for i in range(500):
     rendered = syst.step(env.state, i)
     cv2.imshow( 'im', rendered )
     cv2.moveWindow( 'im', 400, 400 )
-    env.step(+0.01)
+    env.step(+ 0.1)
 
     if cv2.waitKey(0) == ord('q'):
         break

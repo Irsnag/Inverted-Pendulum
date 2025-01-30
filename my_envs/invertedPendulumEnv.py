@@ -61,8 +61,8 @@ class InvertedPendulumEnv(gym.Env):
         force = action*self.force_mag if action != 1 else 0
 
         # Equations of motion
-        costheta = np.cos(theta)
-        sintheta = np.sin(theta)
+        costheta = np.cos(theta-np.pi)
+        sintheta = np.sin(theta-np.pi)
 
         temp = (force + self.pole_mass_length * theta_dot**2 * sintheta) / self.total_mass
         theta_acc = (self.gravity * sintheta - costheta * temp) / (
