@@ -7,9 +7,11 @@ Created on Sun Jan 26 18:10:11 2025
 
 import numpy as np
 import cv2
+import sys
 
-from invertedPendulum import InvertedPendulum
+sys.path.append('../.')
 
+from my_envs.invertedPendulum import InvertedPendulum
 from scipy.integrate import solve_ivp
 import control
 import code
