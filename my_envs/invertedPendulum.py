@@ -26,7 +26,7 @@ class InvertedPendulum:
         BOB_ANG  = state_vec[2]*180. / np.pi # degrees
         LENGTH_OF_PENDULUM = 110.
 
-        IM = np.zeros( (512, 512,3), dtype='uint8' )
+        IM = np.zeros( (512, 512, 3), dtype='uint8' )
 
         # Ground line
         cv2.line(IM, (0, 450), (IM.shape[1], 450), (19,69,139), 4 )
