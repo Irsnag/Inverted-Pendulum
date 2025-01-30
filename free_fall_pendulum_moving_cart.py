@@ -24,7 +24,7 @@ def func2( t, y ):
     x_ddot = L * y[3]*y[3] * np.cos( y[2] )  -  g * np.cos(y[2]) *  np.sin(y[2])
     x_ddot = m / ( m* np.sin(y[2])* np.sin(y[2]) - M -m ) * x_ddot
 
-    theta_ddot = -g/L * np.cos( y[2] ) - 1./L * np.sin( y[2] ) * x_ddot
+    theta_ddot = -g/L * np.cos( y[2] ) + 1./L * np.sin( y[2] ) * x_ddot
 
     friction_theta =  - 0.5*y[3]
     friction_x =  - 1.0*y[1]
@@ -37,7 +37,7 @@ def func2( t, y ):
 
 # Both cart and the pendulum can move.
 if __name__=="__main__":
-    sol = solve_ivp(func2, [0, 20], [ 0, 0., np.pi/2 + 0.1, 0. ],   t_eval=np.linspace( 0, 20, 300)  )
+    sol = solve_ivp(func2, [0, 20], [ 0, 0, np.pi/2 - 0.2, 0. ],   t_eval=np.linspace( 0, 20, 300)  )
 
     syst = InvertedPendulum()
 
@@ -45,5 +45,5 @@ if __name__=="__main__":
         rendered = syst.step( [sol.y[0,i], sol.y[1,i], sol.y[2,i], sol.y[3,i] ], t )
         cv2.imshow( 'im', rendered )
 
-        if cv2.waitKey(30) == ord('q'):
+        if cv2.waitKey(0) == ord('q'):
             break
