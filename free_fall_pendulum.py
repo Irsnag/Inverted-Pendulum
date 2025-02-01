@@ -27,7 +27,7 @@ if __name__=="__main__":
     t_f = 20
     y_0 = [np.pi/2 + 0.1, 0]
     
-    sol = solve_ivp(func, [t_0, t_f], y_0, t_eval=np.linspace(t_0, t_f, 300)  )
+    sol = solve_ivp(func, [t_0, t_f], y_0, t_eval=np.linspace(t_0, t_f, 300))
 
 
     syst = InvertedPendulum()
