@@ -36,7 +36,7 @@ if __name__=="__main__":
         rendered = syst.step([0, 0, sol.y[0,i], sol.y[1,i]], t)
         cv2.imshow('im', rendered)
 
-        if cv2.waitKey(30) == ord('q'):
+        if cv2.waitKey(0) == ord('q'):
             break
         
         
