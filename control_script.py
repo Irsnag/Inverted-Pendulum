@@ -76,6 +76,8 @@ def u( t , y ):
 # The motors are actuated to deliver forward x force from t=t1 to t=t2.
 # Y : [ x, x_dot, theta, theta_dot]
 # Return \dot(Y)
+
+
 def y_dot( t, y ):
     g = 9.8 # Gravitational Acceleration
     L = 1.5 # Length of pendulum
@@ -87,11 +89,10 @@ def y_dot( t, y ):
     d2 = 0.5
 
 
-    x_ddot = u(t, y) - m*L*y[3]*y[3] * np.cos( y[2] ) + m*g*np.cos(y[2]) *  np.sin(y[2])
-    print(u(t, y))
+    x_ddot = + u(t, y) + m*L*y[3]*y[3] * np.cos( y[2] ) - m*g*np.cos(y[2]) *  np.sin(y[2])
     x_ddot = x_ddot / ( M+m-m* np.sin(y[2])* np.sin(y[2]) )
 
-    theta_ddot = -g/L * np.cos( y[2] ) -  np.sin( y[2] ) / L * x_ddot
+    theta_ddot = -g/L * np.cos( y[2] ) + np.sin( y[2] ) / L * x_ddot
 
 
     damping_x =  - d1*y[1]

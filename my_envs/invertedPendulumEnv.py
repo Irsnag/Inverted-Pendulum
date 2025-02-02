@@ -31,7 +31,7 @@ class InvertedPendulumEnv(gym.Env):
         self.x_threshold = 2.4  # Cart position threshold
 
         # Define action and observation spaces
-        self.action_space = spaces.Discrete(2)  # 0 = push left, 1 = push right
+        self.action_space = spaces.Discrete(3)  # 0 = push left, 1 = push right
         self.observation_space = spaces.Box(
             low=np.array(
                 [-self.x_threshold, -np.inf, -self.theta_threshold_radians, -np.inf]
@@ -61,8 +61,8 @@ class InvertedPendulumEnv(gym.Env):
         force = action*self.force_mag if action != 1 else 0
 
         # Equations of motion
-        costheta = np.cos(theta-np.pi)
-        sintheta = np.sin(theta-np.pi)
+        costheta = np.cos(theta)
+        sintheta = np.sin(theta)
 
         temp = (force + self.pole_mass_length * theta_dot**2 * sintheta) / self.total_mass
         theta_acc = (self.gravity * sintheta - costheta * temp) / (
