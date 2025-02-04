@@ -21,10 +21,10 @@ env.action_space
 syst = InvertedPendulum()
 
 for i in range(500):
-    rendered = syst.step([env.state[0], env.state[1], env.state[2], env.state[3]], i)
+    rendered = syst.step([env.state[0], env.state[1], env.state[2] - np.pi/2, env.state[3]], i)
     cv2.imshow( 'im', rendered )
     cv2.moveWindow( 'im', 400, 400 )
-    env.step(+0.01)
+    env.step(0)
 
     if cv2.waitKey(0) == ord('q'):
         break

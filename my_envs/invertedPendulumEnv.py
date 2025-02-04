@@ -31,20 +31,17 @@ class InvertedPendulumEnv(gym.Env):
         self.x_threshold = 2.4  # Cart position threshold
 
         # Define action and observation spaces
-        self.action_space = spaces.Discrete(3)  # 0 = push left, 1 = push right
+        #self.action_space = spaces.Discrete(3)  
+        self.action_space = spaces.Box(low=-1, high=1, shape=(1,), dtype=np.float32)
         self.observation_space = spaces.Box(
-            low=np.array(
-                [-self.x_threshold, -np.inf, -self.theta_threshold_radians, -np.inf]
-            ),
-            high=np.array(
-                [self.x_threshold, np.inf, self.theta_threshold_radians, np.inf]
-            ),
+            low=np.array([-self.x_threshold, -np.inf, -np.pi, -np.inf]),  # Allow full rotation
+            high=np.array([self.x_threshold, np.inf, np.pi, np.inf]),  # Allow full rotation
             dtype=np.float32,
         )
 
         # Rendering
         self.render_mode = render_mode
-        self.state = [0, 0., np.pi/2 + 0.1, 0]
+        self.state = [0, 0., 0.1, 0]
 
         # For rendering
         self.screen = None
@@ -53,12 +50,12 @@ class InvertedPendulumEnv(gym.Env):
     def reset(self, seed=None, options=None):
         # Reset the environment
         super().reset(seed=seed)
-        self.state = [0, 0., np.pi/2 + 0.1, 0]
+        self.state = [0, 0., 0, 0]
         return np.array(self.state, dtype=np.float32), {}
 
     def step(self, action):
         x, x_dot, theta, theta_dot = self.state
-        force = action*self.force_mag if action != 1 else 0
+        force = action*self.force_mag 
 
         # Equations of motion
         costheta = np.cos(theta)
