@@ -29,15 +29,15 @@ class InvertedPendulumEnv(gym.Env):
         self.damping_theta = 0.99
 
         # Angle at which to fail the episode
-        self.theta_threshold_radians = 12 * np.pi / 180  # ~12 degrees
-        self.x_threshold = 2.4  # Cart position threshold
+        self.theta_threshold_radians = 20 * np.pi / 180  # Angle threshold
+        self.x_threshold = 4.4  # Cart position threshold
 
         # Define action and observation spaces
         #self.action_space = spaces.Discrete(3)  
-        self.action_space = spaces.Box(low=-1, high=1, shape=(1,), dtype=np.float32)
+        self.action_space = spaces.Discrete(5)
         self.observation_space = spaces.Box(
-            low=np.array([-self.x_threshold, -np.inf, -np.pi, -np.inf]),  # Allow full rotation
-            high=np.array([self.x_threshold, np.inf, np.pi, np.inf]),  # Allow full rotation
+            low=np.array([-self.x_threshold, -np.inf, -self.theta_threshold_radians, -np.inf]), 
+            high=np.array([self.x_threshold, np.inf, self.theta_threshold_radians, np.inf]),  
             dtype=np.float32,
         )
 
@@ -52,12 +52,18 @@ class InvertedPendulumEnv(gym.Env):
     def reset(self, seed=None, options=None):
         # Reset the environment
         super().reset(seed=seed)
-        self.state = [0, 0., 0, 0]
+        theta = np.random.uniform(-self.theta_threshold_radians, self.theta_threshold_radians)
+        theta_dot = np.random.uniform(-0.1, 0.1)  # Small random initial angular velocity
+        x = np.random.uniform(-0.05, 0.05)  # Small random cart position
+        x_dot = np.random.uniform(-0.05, 0.05)  # Small random cart velocity
+    
+        self.state = [x, x_dot, theta, theta_dot]
         return np.array(self.state, dtype=np.float32), {}
 
     def step(self, action):
         x, x_dot, theta, theta_dot = self.state
-        force = action*self.force_mag 
+        n = action
+        force = self.force_mag * (n-3)
 
         # Equations of motion
         costheta = np.cos(theta)
