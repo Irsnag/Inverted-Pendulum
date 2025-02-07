@@ -51,11 +51,20 @@ def train_agent(num_episodes=num_episodes, num_steps=num_steps):
         print(f"Episode {episode}: Total Reward = {total_reward}")
         rewards.append(total_reward)
         
-    plt.plot(rewards)
     env.close()
     
+    # Plot Training Performance
+    plt.figure(figsize=(10, 5))
+    plt.plot(rewards, label="Total Reward per Episode", color="blue", linewidth=2)
+    plt.xlabel("Episode", fontsize=12)
+    plt.ylabel("Total Reward", fontsize=12)
+    plt.title("DQN Training Performance", fontsize=14)
+    plt.legend()
+    plt.grid(True)
+    plt.show()
     
-def test_agent(agent):
+    
+def test_agent(agent=agent):
     syst = InvertedPendulumRenderer(env)
     state, _ = env.reset()
     total_reward = 0
@@ -63,7 +72,7 @@ def test_agent(agent):
     
     i = 0
     
-    while not done or i==200:
+    while not done or i==250:
         action = agent.act(state)  # Get action index
         next_state, reward, terminated, _, _ = env.step(action)
     
@@ -80,3 +89,5 @@ def test_agent(agent):
             break
     
 
+train_agent()
+test_agent()
