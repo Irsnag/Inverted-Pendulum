@@ -7,36 +7,39 @@ Created on Fri Jan 24 22:04:28 2025
 
 import numpy as np
 import cv2
-from my_envs.invertedPendulum import InvertedPendulum
+from my_envs.invertedPendulumRender import InvertedPendulumRenderer
 from scipy.integrate import solve_ivp
 
-# Pendulum. Cart is fixed and cannot move.
-# Y : [ theta, theta_dot ]
-# returns expression for Y_dot.
-def func(t, y):
-    g = 9.8 # Gravitational Acceleration
-    L = 1.5 # Length of pendulum
-    friction =  -0.5*y[1] 
-    return [y[1], -g/L * np.cos( y[0] ) + friction]
+def pendulum_dynamics(t, state):
+    """Computes the derivatives for the pendulum system."""
+    theta, theta_dot = state
+    g = 9.8  # Gravitational acceleration
+    L = 1.5  # Pendulum length
+    friction = -0.5 * theta_dot  # Damping term
+    theta_ddot = (g / L) * np.sin(theta) + friction  # Angular acceleration
+    return [theta_dot, theta_ddot]
 
-
-# Only the pendulum moves, the cart is stationary
-if __name__=="__main__":
-    # Solve ODE: theta_dot_dot = -g / L * cos( theta ) + delta * theta_dot
-    t_0 = 0
-    t_f = 20
-    y_0 = [np.pi/2 + 0.1, 0]
+if __name__ == "__main__":
+    # Simulation parameters
+    start_time = 0
+    end_time = 20
     
-    sol = solve_ivp(func, [t_0, t_f], y_0, t_eval=np.linspace(t_0, t_f, 300))
+    # Initial conditions:
+    # theta = 0 means the pendulum is upright.
+    # Here, we start slightly tilted from the upright position.
+    initial_state = [0.1, 0]  
 
+    # Solve the system of ODEs
+    solution = solve_ivp(pendulum_dynamics, [start_time, end_time], initial_state, 
+                         t_eval=np.linspace(start_time, end_time, 300))
 
-    syst = InvertedPendulum()
+    # Initialize the renderer
+    renderer = InvertedPendulumRenderer(env=None)
 
-    for i, t in enumerate(sol.t):
-        rendered = syst.step([0, 0, sol.y[0,i], sol.y[1,i]], t)
-        cv2.imshow('im', rendered)
+    # Animate the pendulum motion
+    for i, t in enumerate(solution.t):
+        frame = renderer.render([0, 0, solution.y[0, i], solution.y[1, i], 0, 0], t)
+        cv2.imshow('Inverted Pendulum', frame)
 
         if cv2.waitKey(0) == ord('q'):
             break
-        
-        

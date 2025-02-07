@@ -95,7 +95,7 @@ class InvertedPendulumEnv(gym.Env):
         truncated = False  # For fixed time-limit environments, set this to `True` when reaching the limit
 
         # Reward is +1 for every time step the pole is balanced
-        reward = 1.0 if not terminated else 0.0
+        reward = 1/(1+abs(theta)) if not terminated else 0.0
 
         return (
             self.state,

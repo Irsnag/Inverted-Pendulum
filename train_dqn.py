@@ -72,7 +72,7 @@ def test_agent(agent=agent):
     
     i = 0
     
-    while not done or i==250:
+    while not done:
         action = agent.act(state)  # Get action index
         next_state, reward, terminated, _, _ = env.step(action)
     
@@ -81,11 +81,11 @@ def test_agent(agent=agent):
         done = terminated
         
         rendered = syst.render([env.state[0], env.state[1], env.state[2], env.state[3]], i)
-        cv2.imshow('im', rendered)
-        cv2.moveWindow('im', 400, 400)
+        cv2.imshow('DQN agent', rendered)
+        cv2.moveWindow('DQN agent', 400, 400)
         i += 1
 
-        if cv2.waitKey(0) == ord('q'):
+        if cv2.waitKey(0) == ord('q') or i == 100:
             break
     
 
