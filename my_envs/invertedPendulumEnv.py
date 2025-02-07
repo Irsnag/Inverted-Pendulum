@@ -25,6 +25,8 @@ class InvertedPendulumEnv(gym.Env):
         self.pole_mass_length = self.mass_pole * self.length
         self.force_mag = 10.0
         self.tau = 0.02  # Time step (seconds)
+        self.damping_x = 0.99
+        self.damping_theta = 0.99
 
         # Angle at which to fail the episode
         self.theta_threshold_radians = 12 * np.pi / 180  # ~12 degrees
@@ -41,7 +43,7 @@ class InvertedPendulumEnv(gym.Env):
 
         # Rendering
         self.render_mode = render_mode
-        self.state = [0, 0., -np.pi+0.01, 0]
+        self.state = [0, 0., 0, 0]
 
         # For rendering
         self.screen = None
@@ -70,8 +72,10 @@ class InvertedPendulumEnv(gym.Env):
         # Update state using Euler's method
         x = x + self.tau * x_dot
         x_dot = x_dot + self.tau * x_acc
+        x_dot = x_dot * self.damping_x
         theta = theta + self.tau * theta_dot
         theta_dot = theta_dot + self.tau * theta_acc
+        theta_dot = theta_dot * self.damping_theta
 
         self.state = [x, x_dot, theta, theta_dot]
 
