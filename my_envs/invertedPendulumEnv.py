@@ -52,7 +52,7 @@ class InvertedPendulumEnv(gym.Env):
     def reset(self, seed=None, options=None):
         # Reset the environment
         super().reset(seed=seed)
-        self.state = [0, 0., -np.pi/2, 0]
+        self.state = [0, 0., 0, 0]
         return np.array(self.state, dtype=np.float32), {}
 
     def step(self, action):
