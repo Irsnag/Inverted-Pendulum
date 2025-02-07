@@ -13,7 +13,7 @@ import numpy as np
 from collections import deque
 
 class DQN(nn.Module):
-    def __init__(self, state_size=4, action_size=1):
+    def __init__(self, state_size=4, action_size=5):
         super(DQN, self).__init__()
         self.fc1 = nn.Linear(state_size, 64)
         self.fc2 = nn.Linear(64, 64)
@@ -40,7 +40,7 @@ class ReplayBuffer:
         return len(self.memory)
 
 class DQNAgent:
-    def __init__(self, state_size=4, action_size=1, learning_rate=0.001, gamma=0.99,
+    def __init__(self, state_size=4, action_size=5, learning_rate=0.001, gamma=0.99,
                  epsilon=1.0, epsilon_min=0.01, epsilon_decay=0.995):
         self.state_size = state_size
         self.action_size = action_size
@@ -92,3 +92,5 @@ class DQNAgent:
 
         if self.epsilon > self.epsilon_min:
             self.epsilon *= self.epsilon_decay
+
+
