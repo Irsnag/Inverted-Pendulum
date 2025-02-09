@@ -107,7 +107,7 @@ if __name__ == "__main__":
     for i, t in enumerate(solution.t):
         frame = renderer.render([solution.y[0, i], solution.y[1, i], solution.y[2, i], 
                                  solution.y[3, i], 0, 0], t)
-        cv2.imshow('Cart-Pendulum System', frame)
+        cv2.imshow('Cart-Pendulum LQR control', frame)
 
         if cv2.waitKey(0) == ord('q'):
             break
