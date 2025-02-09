@@ -21,7 +21,7 @@ action_size = env.action_space.n
 # Initialize agent
 agent = DQNAgent(state_size=state_size, action_size=action_size)
 
-num_episodes = 800
+num_episodes = 700
 num_steps = 200
 
 
@@ -64,30 +64,4 @@ def train_agent(num_episodes=num_episodes, num_steps=num_steps):
     plt.show()
     
     
-def test_agent(agent=agent):
-    syst = InvertedPendulumRenderer(env)
-    state, _ = env.reset()
-    total_reward = 0
-    done = False
-    
-    i = 0
-    
-    while not done:
-        action = agent.act(state)  # Get action index
-        next_state, reward, terminated, _, _ = env.step(action)
-    
-        state = next_state
-        total_reward += reward
-        done = terminated
-        
-        rendered = syst.render([env.state[0], env.state[1], env.state[2], env.state[3]], i)
-        cv2.imshow('DQN agent', rendered)
-        cv2.moveWindow('DQN agent', 400, 400)
-        i += 1
-
-        if cv2.waitKey(0) == ord('q') or i == 100:
-            break
-    
-
 train_agent()
-test_agent()

@@ -18,8 +18,8 @@ class InvertedPendulumEnv(gym.Env):
         
         # Physical constants
         self.gravity = 9.81
-        self.mass_cart = 5.0
-        self.mass_pole = 1.0
+        self.mass_cart = 1.0
+        self.mass_pole = 0.1
         self.total_mass = self.mass_cart + self.mass_pole
         self.length = 0.5  # Half the pole length
         self.pole_mass_length = self.mass_pole * self.length
