@@ -30,3 +30,7 @@ $$b_x$$ damping effect factor on the cart
 
 $$b_\theta$$ damping effect factor on the pendulum
 
+
+```
+python free_fall_pendulum.py
+```
