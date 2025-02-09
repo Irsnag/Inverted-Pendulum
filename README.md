@@ -8,6 +8,5 @@ The Inverted Pendulum is a classic problem in dynamics and control systems, ofte
 
 The equations governing the system are :
 
-'''
-$$\mathbb{x_i} = \mathbb{F}\mathsf{x_{i-1}} + \mathbb{U_i}$$
-'''
+$$\dot{\theta} = \mathbb{F}\mathsf{x_{i-1}} + \mathbb{U_i}$$
+
