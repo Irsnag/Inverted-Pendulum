@@ -6,7 +6,7 @@ The Inverted Pendulum is a classic problem in dynamics and control systems, ofte
 
 ## Equations
 
-The equations governing the system are :
+By denoting $$\theta$$ as the angle between upright vertical direction and the pendulum, and $$x$$ as the horizontal coordinate, the equations governing the system are :
 
 $$ (M + m)\ddot{x} + b_x\dot{x} - ml\ddot{\theta}\cos\theta + ml\dot{\theta}^2\sin\theta = F $$
 $$l\ddot{\theta} + b_\theta\dot{\theta} - g\sin\theta = \ddot{x}\cos\theta $$
