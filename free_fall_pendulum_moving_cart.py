@@ -7,46 +7,56 @@ Created on Sun Jan 26 00:15:56 2025
 
 import numpy as np
 import cv2
-
-from my_envs.invertedPendulum import InvertedPendulum
-
+from my_envs.invertedPendulumRender import InvertedPendulumRenderer
 from scipy.integrate import solve_ivp
 
-# Pendulum and Cart system.
-# Y : [ x, x_dot, theta, theta_dot]
-# returns expression for Y_dot.
-def func2( t, y ):
-    g = 9.8 # Gravitational Acceleration
-    L = 1.5 # Length of pendulum
+def cart_pendulum_dynamics(t, state):
+    """
+    Computes the derivatives for the cart-pendulum system.
     
-    friction_theta = 0
-    friction_x =  - 1.0*y[1]
+    State vector:
+    state[0] = x (cart position)
+    state[1] = x_dot (cart velocity)
+    state[2] = theta (pendulum angle, theta = 0 is upright)
+    state[3] = theta_dot (angular velocity)
+    """
+    x, x_dot, theta, theta_dot = state
+    g = 9.8  # Gravitational acceleration
+    L = 1.5  # Pendulum length
+    m = 1.0  # Mass of pendulum bob (kg)
+    M = 5.0  # Mass of cart (kg)
 
-    m = 1.0 #mass of bob (kg)
-    M = 5.0  # mass of cart (kg)
-    x_ddot = -L * y[3]*y[3] * np.cos( y[2] )  +  g * np.cos(y[2]) *  np.sin(y[2])
-    x_ddot = (m + friction_x) / ( m* np.sin(y[2])* np.sin(y[2]) - M -m ) * x_ddot 
+    # Friction terms
+    friction_theta = 0.5 * theta_dot
+    friction_x = 1.0 * x_dot
 
-    theta_ddot = - g/L * np.cos( y[2] ) + 1./L * np.sin( y[2] ) * x_ddot
+    # Equations of motion
+    x_ddot = (friction_x - m * L * (theta_dot ** 2) * np.sin(theta) + m * g * np.cos(theta) * np.sin(theta)) / (m * np.cos(theta)**2 - (M + m))
+    theta_ddot = g / L * np.sin(theta) + (1 / L) * np.cos(theta) * x_ddot
 
-    friction_theta =  - 0.5*y[3]
-    friction_x =  - 1.0*y[1]
-    
-    x_ddot = x_ddot + friction_x
-    theta_ddot = theta_ddot + friction_theta
+    # Apply friction
+    theta_ddot += -friction_theta
 
-    return [y[1], x_ddot, y[3], theta_ddot]
+    return [x_dot, x_ddot, theta_dot, theta_ddot]
 
+if __name__ == "__main__":
+    # Simulation parameters
+    start_time = 0
+    end_time = 20
+    initial_state = [0, 0, -0.2, 0]  # Slightly tilted from upright
 
-# Both cart and the pendulum can move.
-if __name__=="__main__":
-    sol = solve_ivp(func2, [0, 20], [ 0, 0, np.pi/2 - 0.2, 0. ],   t_eval=np.linspace( 0, 20, 300)  )
+    # Solve the system of ODEs
+    solution = solve_ivp(cart_pendulum_dynamics, [start_time, end_time], initial_state, 
+                         t_eval=np.linspace(start_time, end_time, 300))
 
-    syst = InvertedPendulum()
+    # Initialize the renderer
+    renderer = InvertedPendulumRenderer(env=None)
 
-    for i, t in enumerate(sol.t):
-        rendered = syst.step( [sol.y[0,i], sol.y[1,i], sol.y[2,i], sol.y[3,i] ], t )
-        cv2.imshow( 'im', rendered )
+    # Animate the cart-pendulum motion
+    for i, t in enumerate(solution.t):
+        frame = renderer.render([solution.y[0, i], solution.y[1, i], solution.y[2, i], 
+                                 solution.y[3, i], 0, 0], t)
+        cv2.imshow('Cart-Pendulum System', frame)
 
         if cv2.waitKey(0) == ord('q'):
             break
