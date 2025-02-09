@@ -13,7 +13,7 @@ $$l\ddot{\theta} + b_\theta\dot{\theta} - g\sin\theta = \ddot{x}\cos\theta $$
 
 
 ```math
-\begin{bmatrix}X\\Y\end{bmatrix}
+\begin{bmatrix}\dot{x}\\\ddot{x}\\\dot{\theta}\\\ddot{\theta}\end{bmatrix}
 ```
 
 
