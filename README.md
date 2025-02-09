@@ -31,6 +31,19 @@ $$b_x$$ damping effect factor on the cart
 $$b_\theta$$ damping effect factor on the pendulum
 
 
+
+## Code
+
+To run the LQR control script, use the following command : 
+
 ```
-python free_fall_pendulum.py
+python lqr_control.py
 ```
+
+To run the RL control script, use the following command : 
+
+```
+python rl_control.py
+```
+
+This script will load a model that has already been trained and simulate its actions. To run your own training with your own parameters, please modify the `train_dqn.py` script
