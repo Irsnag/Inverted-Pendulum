@@ -12,6 +12,8 @@ $$ (M + m)\ddot{x} + b_x\dot{x} - ml\ddot{\theta}\cos\theta + ml\dot{\theta}^2\s
 $$l\ddot{\theta} + b_\theta\dot{\theta} - g\sin\theta = \ddot{x}\cos\theta $$
 
 
-$\begin{bmatrix}A1 &A2 & A3\\A4 & A5 & A6 \end{bmatrix}$
+```math
+\begin{bmatrix}X\\Y\end{bmatrix}
+```
 
 
