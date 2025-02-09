@@ -66,7 +66,4 @@ We expose here the results of the simulation, first with the uncontrolled system
   <img src="results/lqr_control.gif" />
 </p>
 
-<p align="center">
-  <img src="results/rl_control.gif" />
-</p>
 
