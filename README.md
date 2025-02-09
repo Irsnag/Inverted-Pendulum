@@ -17,10 +17,16 @@ Which can be linearized as :
 \begin{bmatrix}\dot{x}\\\ddot{x}\\\dot{\theta}\\\ddot{\theta}\end{bmatrix} = \begin{bmatrix}0 & 1 & 0 & 0\\ 0 & -b_x & \frac{g*m}{M} & 0 \\ 0 & \frac{-b_x}{(M*l)} & \frac{(m+M)*g}{(M*l)} & \frac{-b_\theta*(m+M)*g}{(M*l)} \\ 0 & 0 & 0 & 1 \end{bmatrix} \begin{bmatrix}x\\\dot{x}\\\theta\\\dot{\theta}\end{bmatrix} + \begin{bmatrix}0\\\ \frac{1}{M}\\0\\\frac{1}{M*l}\end{bmatrix} u
 ```
 Given :
-$$g$$ gravity
+
+$$g$$ gravity constant
+
 $$M$$ mass of cart
+
 $$m$$ mass of pendulum
+
 $$l$$ length of pendulum
+
 $$b_x$$ damping effect factor on the cart
+
 $$b_\theta$$ damping effect factor on the pendulum
 
