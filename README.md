@@ -47,3 +47,7 @@ python rl_control.py
 ```
 
 This script will load a model that has already been trained and simulate its actions. To run your own training with your own parameters, please modify the `train_dqn.py` script
+
+The result of my own training for the DQN agent can be seen below :
+
+![DQN agent training curve](results/training_curve.png)
