@@ -24,9 +24,6 @@ agent = DQNAgent(state_size=state_size, action_size=action_size)
 agent.epsilon = 0 #No exploration
 agent.q_network = torch.load('DQN_agent.pt')
 
-num_episodes = 700
-num_steps = 200
-
 def control_agent(agent=agent):
     syst = InvertedPendulumRenderer(env)
     state, _ = env.reset()
@@ -48,7 +45,7 @@ def control_agent(agent=agent):
         cv2.moveWindow('Cart-Pendulum RL control', 400, 400)
         i += 1
 
-        if cv2.waitKey(0) == ord('q') or i == 100:
+        if cv2.waitKey(0) == ord('q') or i == 200:
             break
         
 control_agent(agent)
