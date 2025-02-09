@@ -8,5 +8,6 @@ The Inverted Pendulum is a classic problem in dynamics and control systems, ofte
 
 The equations governing the system are :
 
-$$l\ddot{\theta} + b_\theta\dot{theta} - g\sin\theta = \ddot{x}\cos\theta $$
+$$ (M + m)\ddot{x} + b_x\dot{x} - ml\ddot{\theta}\cos\theta + ml\dot{\theta}^2\sin\theta = F $$
+$$l\ddot{\theta} + b_\theta\dot{\theta} - g\sin\theta = \ddot{x}\cos\theta $$
 
