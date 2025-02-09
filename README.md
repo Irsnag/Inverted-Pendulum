@@ -50,8 +50,23 @@ This script will load a model that has already been trained and simulate its act
 
 The result of my own training for the DQN agent can be seen below :
 
-
-
 <p align="center">
   <img src="results/training_curve.png" />
 </p>
+
+## Results
+
+We expose here the results of the simulation, first with the uncontrolled system where the pendulum will simply fall, and then both control methods (LQR and RL) 
+
+<p align="center">
+  <img src="results/free_fall_pendulum_moving_cart.gif" />
+</p>
+
+<p align="center">
+  <img src="results/lqr_control.gif" />
+</p>
+
+<p align="center">
+  <img src="results/rl_control.gif" />
+</p>
+
