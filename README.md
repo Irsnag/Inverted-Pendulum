@@ -8,7 +8,6 @@ The Inverted Pendulum is a classic problem in dynamics and control systems, ofte
 
 The equations governing the system are :
 
-\begin{enumerate}
-  \item Items are numbered automatically.
-  \item The numbers start at 1 with each use of the \texttt{enumerate} environment.
-\end{enumerate}
+'''
+$$\mathbb{x_i} = \mathbb{F}\mathsf{x_{i-1}} + \mathbb{U_i}$$
+'''
