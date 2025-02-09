@@ -14,7 +14,7 @@ $$l\ddot{\theta} + b_\theta\dot{\theta} - g\sin\theta = \ddot{x}\cos\theta $$
 Which can be linearized as :
 
 ```math
-\begin{bmatrix}\dot{x}\\\ddot{x}\\\dot{\theta}\\\ddot{\theta}\end{bmatrix} = \begin{bmatrix}0 & 1 & 0 & 0\\ 0 & -b_x & g*m/M & 0 \\ 0 & -b_x & 0 & 1 \\ 0 & 0 & 0 & 1 \end{bmatrix} \begin{bmatrix}x\\\dot{x}\\\theta\\\dot{\theta}\end{bmatrix}
+\begin{bmatrix}\dot{x}\\\ddot{x}\\\dot{\theta}\\\ddot{\theta}\end{bmatrix} = \begin{bmatrix}0 & 1 & 0 & 0\\ 0 & -b_x & g*m/M & 0 \\ 0 & -b_x/(M*l) & (m+M)*g/(M*l) & -b_\theta*(m+M)*g/(M*l) \\ 0 & 0 & 0 & 1 \end{bmatrix} \begin{bmatrix}x\\\dot{x}\\\theta\\\dot{\theta}\end{bmatrix}
 ```
 
 
