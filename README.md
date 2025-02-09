@@ -11,9 +11,10 @@ The equations governing the system are :
 $$ (M + m)\ddot{x} + b_x\dot{x} - ml\ddot{\theta}\cos\theta + ml\dot{\theta}^2\sin\theta = F $$
 $$l\ddot{\theta} + b_\theta\dot{\theta} - g\sin\theta = \ddot{x}\cos\theta $$
 
+Which can be linearized as :
 
 ```math
-\begin{bmatrix}\dot{x}\\\ddot{x}\\\dot{\theta}\\\ddot{\theta}\end{bmatrix}
+\begin{bmatrix}\dot{x}\\\ddot{x}\\\dot{\theta}\\\ddot{\theta}\end{bmatrix} = \begin{bmatrix}0 1 0 0\\ 0 -b_x g*m/M 0 \\ 0 -b_x 0 1 \\  \end{bmatrix} \begin{bmatrix}x\\\dot{x}\\\theta\\\dot{\theta}\end{bmatrix}
 ```
 
 
